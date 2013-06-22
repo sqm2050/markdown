@@ -1,0 +1,4 @@
+*.o
+*.html
+a.out
+*.core
