@@ -148,8 +148,8 @@ void process_normal(char *buf, int fd_in, int fd_out)
 		case ' ':
 			if (buf[i + 1] == '_') {
 				i++;
-				write(fd_out, "<i><font color=blue>",
-						strlen("<i><font color=blue>"));
+				write(fd_out, "<font color=blue>",
+						strlen("<font color=blue>"));
 				break;
 			}
 			if (buf[i + 1] == '*') {
@@ -162,8 +162,8 @@ void process_normal(char *buf, int fd_in, int fd_out)
 		case '_':
 			if (buf[i + 1] == ' ') {
 				i++;
-				write(fd_out, "</i></font>",
-							strlen("</i></font>"));
+				write(fd_out, "</font>",
+							strlen("</font>"));
 				break;
 			}
 			write(fd_out, &buf[i], 1);
@@ -175,6 +175,14 @@ void process_normal(char *buf, int fd_in, int fd_out)
 				break;
 			}
 			write(fd_out, &buf[i], 1);
+			break;
+		case '$':
+			j++;
+			if (j > 0 && j % 2 == 1) {
+				write(fd_out, "<font color=#d14>", strlen("<font color=#d14>"));
+			} else if (j > 0 && j % 2 == 0) {
+				write(fd_out, "</font>", strlen("</font>"));
+			}
 			break;
 		default:
 			write(fd_out, &buf[i], 1);
