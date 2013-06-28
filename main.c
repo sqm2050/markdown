@@ -19,12 +19,11 @@ int main(int argc, char *argv[])
 		puts("open  dst file fail");
 		return -1;
 	}
-	write(fd_out, "<html>", strlen("<html>"));
 	/* write css to the file */
 	write(fd_out, css, strlen(css));
 	decode(fd_in, fd_out);
 	write(fd_out, tip, strlen(tip));
-	write(fd_out, "</html>", strlen("</html>"));
+	write(fd_out, "</div>", strlen("</div>"));
 	close(fd_in);
 	close(fd_out);
 }
