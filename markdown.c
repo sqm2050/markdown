@@ -125,10 +125,10 @@ void process_quote(char *buf, int fd_in, int fd_out)
 {
 	int lv, i, j = 0;
 	for (lv = 0; buf[lv] == '\t'; lv++);lv++;
-	write(fd_out, "<ul><blockquote>\n", strlen("<ul><blockquote>\n"));
+	write(fd_out, "<blockquote>\n", strlen("<blockquote>\n"));
 	buf++;
 	process_normal(buf, fd_in, fd_out);
-	write(fd_out, "</blockquote></ul>\n", strlen("</blockquote></ul>\n"));
+	write(fd_out, "</blockquote>\n", strlen("</blockquote>\n"));
 }
 
 void process_normal(char *buf, int fd_in, int fd_out)
