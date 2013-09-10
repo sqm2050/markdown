@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
 	write(fd_out, css, strlen(css));
 	decode(fd_in, fd_out);
 	write(fd_out, tip, strlen(tip));
+//	write(fd_out, disqus, strlen(disqus));
 	write(fd_out, "</div>", strlen("</div>"));
 	close(fd_in);
 	close(fd_out);

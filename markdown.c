@@ -126,7 +126,8 @@ void process_quote(char *buf, int fd_in, int fd_out)
 	int lv, i, j = 0;
 	for (lv = 0; buf[lv] == '\t'; lv++);lv++;
 	write(fd_out, "<blockquote>\n", strlen("<blockquote>\n"));
-	buf++;
+	buf += lv;	/* ommit '\t' */
+	buf++;		/* ommit '>' */
 	process_normal(buf, fd_in, fd_out);
 	write(fd_out, "</blockquote>\n", strlen("</blockquote>\n"));
 }
@@ -148,13 +149,14 @@ void process_normal(char *buf, int fd_in, int fd_out)
 		case ' ':
 			if (buf[i + 1] == '_') {
 				i++;
-				write(fd_out, "<font color=blue>",
-						strlen("<font color=blue>"));
+				write(fd_out, "<font color=blue>&nbsp;",
+					strlen("<font color=blue>&nbsp;"));
 				break;
 			}
 			if (buf[i + 1] == '*') {
 				i++;
-				write(fd_out, "<strong>", strlen("<strong>"));
+				write(fd_out, "<strong>&nbsp;",
+					strlen("<strong>&nbsp;"));
 				break;
 			}
 			write(fd_out, &buf[i], 1);
@@ -162,8 +164,8 @@ void process_normal(char *buf, int fd_in, int fd_out)
 		case '_':
 			if (buf[i + 1] == ' ') {
 				i++;
-				write(fd_out, "</font>",
-							strlen("</font>"));
+				write(fd_out, "&nbsp;</font>",
+							strlen("&nbsp;</font>"));
 				break;
 			}
 			write(fd_out, &buf[i], 1);
@@ -171,7 +173,7 @@ void process_normal(char *buf, int fd_in, int fd_out)
 		case '*':
 			if (buf[i + 1] == ' ') {
 				i++;
-				write(fd_out, "</strong>", strlen("</strong>"));
+				write(fd_out, "&nbsp</strong>", strlen("&nbsp</strong>"));
 				break;
 			}
 			write(fd_out, &buf[i], 1);
@@ -179,7 +181,7 @@ void process_normal(char *buf, int fd_in, int fd_out)
 		case '$':
 			j++;
 			if (j > 0 && j % 2 == 1) {
-				write(fd_out, "<font color=#d14>", strlen("<font color=#d14>"));
+				write(fd_out, "<font color=#DD1144>", strlen("<font color=#dd1144>"));
 			} else if (j > 0 && j % 2 == 0) {
 				write(fd_out, "</font>", strlen("</font>"));
 			}

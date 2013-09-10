@@ -9,6 +9,6 @@ main.o:main.c markdown.h css.h
 markdown.o:markdown.c markdown.h
 
 clean:
-	@-rm *.o a.out
+	@-rm -rf *.o a.out
 install: all
 	install a.out ~/sbin/md
