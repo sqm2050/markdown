@@ -135,6 +135,10 @@ void process_quote(char *buf, int fd_in, int fd_out)
 void process_normal(char *buf, int fd_in, int fd_out)
 {
 	int i, j = 0;
+	/* set tab inden begin */
+	for (i = 0; buf[i] == '\t';i++) {
+		write(fd_out, "<ul>", strlen("<ul>"));
+	}
 	write(fd_out, "<p>", strlen("<p>"));
 	for (i = 0; i < strlen(buf); i++) {
 		switch (buf[i]) {
@@ -192,4 +196,9 @@ void process_normal(char *buf, int fd_in, int fd_out)
 		}
 	}
 	write(fd_out, "</p>", strlen("</p>"));
+
+	/* set tab inden end */
+	for (i = 0; buf[i] == '\t';i++) {
+		write(fd_out, "</ul>", strlen("</ul>"));
+	}
 }
